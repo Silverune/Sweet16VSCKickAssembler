@@ -1,0 +1,363 @@
+{
+	"name": "kick-assembler-vscode-ext",
+	"displayName": "Kick Assembler (C64) for Visual Studio Code",
+	"description": "Kick Assembler (C64) IDE Extension for Visual Studio Code",
+	"author": "Paul Hocker",
+	"license": "MIT",
+	"icon": "images/icon.png",
+	"version": "0.6.2",
+	"status": "",
+	"repository": {
+		"type": "git",
+		"url": "https://gitlab.com/retro-coder/commodore/kick-assembler-vscode-ext"
+	},
+	"publisher": "paulhocker",
+	"categories": [
+		"Programming Languages"
+	],
+	"keywords": [
+		"kick",
+		"assembler",
+		"kickassembler",
+		"c64",
+		"6502",
+		"mega65",
+		"c128",
+		"65ce02",
+		"45gs2"
+	],
+	"engines": {
+		"vscode": "^1.50.0"
+	},
+	"activationEvents": [
+		"*"
+	],
+	"main": "./client/out/extension",
+	"contributes": {
+		"breakpoints": [
+			{
+				"language": "kickassembler"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "kickassembler.buildandrunstartup",
+				"key": "f5",
+				"when": "editorLangId == kickassembler || resourceLangId == kickassembler"
+			},
+			{
+				"command": "kickassembler.buildandrun",
+				"key": "f6",
+				"when": "editorLangId == kickassembler || resourceLangId == kickassembler"
+			},
+			{
+				"command": "kickassembler.buildanddebugstartup",
+				"key": "shift+f5",
+				"when": "editorLangId == kickassembler || resourceLangId == kickassembler"
+			},
+			{
+				"command": "kickassembler.buildanddebug",
+				"key": "shift+f6",
+				"when": "editorLangId == kickassembler || resourceLangId == kickassembler"
+			},
+			{
+				"command": "kickassembler.build",
+				"key": "ctrl+shift+b",
+				"when": "editorLangId == kickassembler || resourceLangId == kickassembler"
+			},
+			{
+				"command": "kickassembler.buildstartup",
+				"key": "ctrl+shift+s",
+				"when": "editorLangId == kickassembler || resourceLangId == kickassembler"
+			}
+		],
+		"commands": [
+			{
+				"command": "kickassembler.build",
+				"title": "Kick Assembler: Build"
+			},
+			{
+				"command": "kickassembler.buildandrun",
+				"title": "Kick Assembler: Build and Run"
+			},
+			{
+				"command": "kickassembler.buildstartup",
+				"title": "Kick Assembler: Build Startup"
+			},
+			{
+				"command": "kickassembler.buildandrunstartup",
+				"title": "Kick Assembler: Build and Run Startup"
+			},
+			{
+				"command": "kickassembler.buildanddebug",
+				"title": "Kick Assembler: Build and Debug"
+			},
+			{
+				"command": "kickassembler.buildanddebugstartup",
+				"title": "Kick Assembler: Build and Debug Startup"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Kick Assembler",
+			"properties": {
+				"kickassembler.assemblerJar": {
+					"type": "string",
+					"default": "kickass.jar",
+					"description": "Full path to your Kick Assembler JAR file."
+				},
+				"kickassembler.assemblerMainClass": {
+					"type": "string",
+					"default": "kickass.KickAssembler",
+					"markdownDescription": "Name of the main class inside kickass.jar (Usually always **kickass.KickAssembler**).\n\nNote: You only need to change this setting if you are running a custom/modified version of kickass."
+				},
+				"kickassembler.assemblerArgs": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"markdownDescription": "Additional arguments to pass to the Kick Assembler"
+				},
+				"kickassembler.outputFile": {
+					"type": "string",
+					"default": "",
+					"markdownDescription": "Override the default output filename with the name specified"
+				},
+				"kickassembler.javaRuntime": {
+					"type": "string",
+					"default": "java.exe",
+					"description": "Full path to your Java runtime."
+				},
+				"kickassembler.javaPlugins": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Full classpath to your Java plugins."
+				},
+				"kickassembler.javaPluginSystemProperties": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Individual properties/values used by your plugins. For example KICKASS_CRUNCHER_CACHE=true"
+				},
+				"kickassembler.javaAllowFileCreation": {
+					"type": "boolean",
+					"default": false,
+					"markdownDescription": "Enable the **createFile** functionality"
+				},
+				"kickassembler.emulatorRuntime": {
+					"type": "string",
+					"default": "",
+					"description": "Full path to your emulator runtime."
+				},
+				"kickassembler.emulatorOptions": {
+					"type": "string",
+					"default": "",
+					"description": "Runtime options for your emulator."
+				},
+				"kickassembler.emulatorViceSymbols": {
+					"type": "boolean",
+					"default": true,
+					"description": "Export labels to a file which can be read by VICE"
+				},
+				"kickassembler.debuggerRuntime": {
+					"type": "string",
+					"default": "",
+					"description": "Full path to your debugger runtime."
+				},
+				"kickassembler.debuggerOptions": {
+					"type": "string",
+					"default": "-wait 2500 -autojmp",
+					"description": "Runtime options for your debugger."
+				},
+				"kickassembler.debuggerDumpFile": {
+					"type": "boolean",
+					"default": true,
+					"description": "Dump an *.dbg infofile for c64debugger"
+				},
+				"kickassembler.byteDumpFile": {
+					"type": "boolean",
+					"default": false,
+					"description": "Dump the assembled bytes into ByteDump.txt together with the code that generated them."
+				},
+				"kickassembler.outputDirectory": {
+					"type": "string",
+					"default": "",
+					"description": "Where to store output files generated by Kick Assembler (no trailing slashes)"
+				},
+				"kickassembler.autoAssembleTrigger": {
+					"type": "string",
+					"enum": [
+						"onChange and onSave",
+						"onSave only"
+					],
+					"default": "onChange and onSave",
+					"markdownDescription": "Which event should trigger automatic assembling for code inspection purposes.\n\nHint: Using **onSave only** in combination with `#files.autoSave#` **afterDelay** could improve performance"
+				},
+				"kickassembler.autoAssembleTriggerDelay": {
+					"type": "integer",
+					"default": 120,
+					"minimum": 0,
+					"markdownDescription": "This setting controls the delay in ms after you have stopped typing until it tries to assemble. This only applies when `#kickassembler.autoAssembleTrigger#` is set to **onChange and onSave**.\n\nNote: Setting this to zero might impact performance. Try the default setting first and try lowering it from there."
+				},
+				"kickassembler.trace.server": {
+					"scope": "window",
+					"type": "string",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"default": "off",
+					"description": "Traces the communication between VS Code and the language server."
+				},
+				"kickassembler.completionParameterPlaceholders": {
+					"type": "boolean",
+					"default": false,
+					"markdownDescription": "Insert placeholder parameters on function/macro completions.\n>Attention: Intellisense in placeholders won't work until you disable `#editor.suggest.snippetsPreventQuickSuggestions#`"
+				},
+				"kickassembler.fileTypesBinary": {
+					"type": "string",
+					"default": "",
+					"markdownDescription": "Comma separated list of file extensions for **LoadBinary()** or **.import binary**"
+				},
+				"kickassembler.fileTypesSid": {
+					"type": "string",
+					"default": "sid,prg",
+					"markdownDescription": "Comma separated list of file extensions for **LoadSid()**"
+				},
+				"kickassembler.fileTypesPicture": {
+					"type": "string",
+					"default": "gif,jpg,png",
+					"markdownDescription": "Comma separated list of file extensions for **LoadPicture()**"
+				},
+				"kickassembler.fileTypesSource": {
+					"type": "string",
+					"default": "asm,src,s,kick,a,ka,lib,inc",
+					"markdownDescription": "Comma separated list of file extensions for **.import source** or **#import**"
+				},
+				"kickassembler.fileTypesC64": {
+					"type": "string",
+					"default": "prg,c64",
+					"markdownDescription": "Comma separated list of file extensions for **.import c64**"
+				},
+				"kickassembler.fileTypesText": {
+					"type": "string",
+					"default": "txt",
+					"markdownDescription": "Comma separated list of file extensions for **.import text**"
+				},
+				"kickassembler.opcodes.illegal": {
+					"type": "boolean",
+					"default": true,
+					"description": "Support illegal 6502 opcodes"
+				},
+				"kickassembler.opcodes.DTV": {
+					"type": "boolean",
+					"default": false,
+					"description": "Support DTV opcodes"
+				},
+				"kickassembler.opcodes.65c02": {
+					"type": "boolean",
+					"default": false,
+					"description": "Support 65c02 opcodes"
+				},
+				"kickassembler.opcodes.65ce02": {
+					"type": "boolean",
+					"default": false,
+					"description": "Support 65ce02 opcodes"
+				},
+				"kickassembler.opcodes.45gs02": {
+					"type": "boolean",
+					"default": false,
+					"description": "Support 45gs02 opcodes"
+				},
+				"kickassembler.assemblerLibraryPaths": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Library paths where Kick Assembler will look when it tries to open external files and does not find the given file in the current directory path first."
+				},
+				"kickassembler.startup": {
+					"type": "string",
+					"default": "",
+					"description": "This setting will override the current open file for assembling, and will instead use this file. This can be considered your master or startup file for your project. In the future this might be replaced with a generic project configuration file."
+				},
+				"kickassembler.memoryViewerSize": {
+					"type": "integer",
+					"enum": [
+						2048,
+						1024,
+						512,
+						256
+					],
+					"default": 1024,
+					"description": "Segment Size for the Memory Viewer."
+				},
+				"kickassembler.memoryViewerShowRoms": {
+					"type": "boolean",
+					"default": "true",
+					"description": "Show Rom Next To Program Memory"
+				},
+				"kickassembler.codeSneakPeekLines": {
+					"type": "number",
+					"default": 5,
+					"description": "How many lines of code should be shown at named label referencing on hover and intellisense."
+				}
+			}
+		},
+		"languages": [
+			{
+				"id": "kickassembler",
+				"aliases": [
+					"Kick Assembler"
+				],
+				"extensions": [
+					".asm",
+					".macro",
+					".s",
+					".src",
+					".inc",
+					".kick",
+					".ka",
+					".a",
+					".lib"
+				],
+				"configuration": "./client/syntaxes/language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "kickassembler",
+				"scopeName": "source.assembly.kickassembler",
+				"path": "./client/syntaxes/kickassembler.tmLanguage"
+			}
+		],
+		"views": {
+			"explorer": [
+				{
+					"type": "webview",
+					"id": "kickassembler.memoryViewer",
+					"name": "Kick Assembler Memory Viewer"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish_bak": "npm run compile",
+		"vscode:prepublish": "cd client && npm install && cd .. && npm run compile",
+		"compile": "tsc -b",
+		"watch": "tsc -b -w",
+		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+		"test": "sh ./scripts/e2e.sh"
+	},
+	"devDependencies": {
+		"@types/mocha": "^8.2.1",
+		"@types/node": "^12.20.4",
+		"@typescript-eslint/parser": "^2.3.0",
+		"eslint": "^6.4.0",
+		"typescript": "^4.2.3"
+	}
+}

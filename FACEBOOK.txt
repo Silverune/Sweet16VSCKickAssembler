@@ -1,0 +1,28 @@
+Use this template when posting to Facebook.
+
+~~~
+
+Kick Assembler (C64) For Visual Studio Code
+Release 0.6.x
+
+And a big thank you to everyone using the extension. Your feedback, ideas and bug reports are making this tool better every day.
+
+👉 You can read more about the Release here
+
+https://gitlab.com/retro-coder/commodore/kick-assembler-vscode-ext/blob/master/RELEASE.md
+
+Keep those ideas coming!
+
+We hope you enjoy the new changes, and that you are finding the extension to be useful.
+
+
+👉 A full list of historical changes can be viewed here
+
+https://gitlab.com/retro-coder/commodore/kick-assembler-vscode-ext/blob/master/HISTORY.md
+
+Please consider Rating the extension on the Marketplace.
+
+Feedback, Bug Reports and Reviews are always welcome.
+
+https://marketplace.visualstudio.com/items?itemName=paulhocker.kick-assembler-vscode-ext
+

@@ -1,0 +1,32 @@
+{
+	"comments": {
+		"lineComment": "//",
+		"blockComment": [ "/*", "*/" ]
+	},
+	"brackets": [
+		["{", "}"],
+		["[", "]"],
+		["(", ")"]
+	],
+	"autoClosingPairs": [
+		["{", "}"],
+		["[", "]"],
+		["(", ")"],
+		["\"", "\""],
+		["'", "'"],
+		{ "open": "/**", "close": " */", "notIn": ["string"] }
+	],
+	"surroundingPairs": [
+		["{", "}"],
+		["[", "]"],
+		["(", ")"],
+		["\"", "\""],
+		["'", "'"]
+	],
+	"folding": {
+		"markers": {
+			"start": "^\\s*(\\.(define|disk|enum|for|function|if|macro|modify|namespace|pseudocommand|pseudopc|while|zp).*?{|#if)",
+			"end": "^\\s*?(}|#endif)"
+		}
+	}
+}
